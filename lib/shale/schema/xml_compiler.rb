@@ -581,6 +581,13 @@ module Shale
 
         type = @simple_types_repository[type] if @simple_types_repository[type]
 
+        # if there is no namespace, use the default
+        type = if type.include?(':')
+                 type
+               else
+                 "#{XS_NAMESPACE_URI}:#{type}"
+               end
+
         if XS_TYPE_DATE.include?(type)
           Compiler::Date.new
         elsif XS_TYPE_TIME.include?(type)
